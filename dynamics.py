@@ -1,8 +1,12 @@
+import sys
+sys.path.append('.')
+sys.path.append('./muscle_modelling')
+
 import numpy as np
 
 from muscle_length import soleus_length, tibialis_length
-from force_length import force_length_tendon
-from get_velocity import get_velocity
+from muscle_modelling.force_length import force_length_tendon
+from muscle_modelling.get_velocity import get_velocity
 
 def dynamics(x, soleus, tibialis, force_length_regression, force_velocity_regression):
     """

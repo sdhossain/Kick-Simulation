@@ -1,8 +1,12 @@
+import sys
+sys.path.append('.')
+sys.path.append('./muscle_modelling')
+
 import scipy
-from force_length import force_length_muscle, \
+from muscle_modelling.force_length import force_length_muscle, \
                          force_length_parallel, \
                          force_length_tendon
-from force_velocity import force_velocity_muscle
+from muscle_modelling.force_velocity import force_velocity_muscle
 
 def get_velocity(a, lm, lt, lr, vr):
     """

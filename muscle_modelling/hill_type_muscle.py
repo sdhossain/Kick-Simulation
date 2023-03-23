@@ -1,4 +1,8 @@
-from force_length import force_length_tendon
+import sys
+sys.path.append('.')
+sys.path.append('./muscle_modelling')
+
+from muscle_modelling.force_length import force_length_tendon
 
 class HillTypeMuscle:
     """
