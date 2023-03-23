@@ -1,3 +1,7 @@
+import sys
+sys.path.append('.')
+sys.path.append('./muscle_modelling')
+
 import numpy as np
 
 def force_length_muscle(lm, force_length_regression):

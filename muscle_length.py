@@ -1,3 +1,7 @@
+import sys
+sys.path.append('.')
+sys.path.append('./muscle_modelling')
+
 import numpy as np
 
 def soleus_length(theta):

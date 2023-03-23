@@ -1,10 +1,14 @@
+import sys
+sys.path.append('.')
+sys.path.append('./muscle_modelling')
+
 import math
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 
 from muscle_length import soleus_length, tibialis_length
-from hill_type_muscle import HillTypeMuscle
+from muscle_modelling.hill_type_muscle import HillTypeMuscle
 from dynamics import dynamics
 from gravity_moment import gravity_moment
 

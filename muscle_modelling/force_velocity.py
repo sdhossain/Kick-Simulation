@@ -1,5 +1,9 @@
+import sys
+sys.path.append('.')
+sys.path.append('./muscle_modelling')
+
 import numpy as np
-from model_eval import model_eval
+from muscle_modelling.model_eval import model_eval
 
 def force_velocity_muscle(vm, force_velocity_regression):
     """

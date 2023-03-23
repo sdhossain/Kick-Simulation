@@ -1,5 +1,9 @@
+import sys
+sys.path.append('.')
+sys.path.append('./muscle_modelling')
+
 from simulate import simulate
-from regression import get_muscle_force_length_regression,\
+from muscle_modelling.regression import get_muscle_force_length_regression,\
                        get_muscle_force_velocity_regression
 
 def main():
