@@ -4,6 +4,9 @@ sys.path.append('./muscle_modelling')
 
 import numpy as np
 
+SHANK_MASS = 18
+COM_DIST = 0.6
+
 def gravity_moment(theta):
     """
     Calculate moment of gravity based on theta
@@ -12,8 +15,8 @@ def gravity_moment(theta):
     :return moment: moment caused by gravity
     """
 
-    mass = 75  # body mass (kg; excluding feet)
-    centre_of_mass_distance = 1  # distance from ankle to body segment centre of mass (m)
+    mass = SHANK_MASS
+    centre_of_mass_distance = COM_DIST
     g = 9.81  # acceleration of gravity
     moment = mass * g * centre_of_mass_distance * np.cos(theta)
 

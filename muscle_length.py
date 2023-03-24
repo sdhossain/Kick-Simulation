@@ -4,31 +4,15 @@ sys.path.append('./muscle_modelling')
 
 import numpy as np
 
-def soleus_length(theta):
-    """
-    Calculates soleus length based on angle
-    :param theta: body angle (up from prone horizontal)
-    :return soleus: length of muscle
-    """
+QUAD_SHANK_INSERTION = (0.1, 0.01)
+KNEE_ORIGIN = (0, 0)
+THIGH_LENGTH = 0.5
 
-    # define rotation matrix
-    rotation = np.array([[np.cos(theta), -np.sin(theta)], 
-                         [np.sin(theta), np.cos(theta)]])
-    
-    # coordinates in global reference frame
-    origin = np.dot(rotation, np.array([0.3, 0.03]).T)
-    insertion = np.array([-0.05, -0.02])
-    
-    difference = origin - insertion
-    soleus_length = np.sqrt(difference[0]**2 + difference[1]**2)
-    
-    return soleus_length
-
-def tibialis_length(theta):
+def quad_muscle_length(theta):
     """
-    Calculates soleus length based on angle
-    :param theta: body angle (up from prone horizontal)
-    :return tibialis: length of muscle
+    Calculates quadricp muscle length based on angle
+    :param theta: angle between shank and thigh
+    :return quad_muscle: length of muscle
     """
 
     # define rotation matrix
@@ -36,10 +20,10 @@ def tibialis_length(theta):
                           [np.sin(theta), np.cos(theta)]])
 
     # coordinates in global reference frame
-    origin = np.dot(rotation, np.array([0.3, -0.03]).reshape((2,1)))
-    insertion = np.array([0.06, -0.03]).reshape((2,1))
+    origin = np.dot(rotation, np.array([QUAD_SHANK_INSERTION[0], QUAD_SHANK_INSERTION[1]]).reshape((2,1)))
+    insertion = np.array([KNEE_ORIGIN[0], KNEE_ORIGIN[1]]).reshape((2,1))
 
     difference = origin - insertion
-    tibialis_anterior_length = np.sqrt(difference[0]**2 + difference[1]**2)
+    quad_muscle_length = np.sqrt(difference[0]**2 + difference[1]**2)
 
-    return tibialis_anterior_length[0]
+    return quad_muscle_length[0]
