@@ -4,17 +4,22 @@ sys.path.append('./muscle_modelling')
 
 import numpy as np
 
-def gravity_moment(theta):
+SHANK_MASS = 18
+COM_DIST = 0.6
+PHI = (3*np.pi)/2
+
+def gravity_moment(theta, thigh_offset):
     """
     Calculate moment of gravity based on theta
 
     :param theta: andgle in radians
+    :param thigh_offset: initial offset angle of thigh in radians
     :return moment: moment caused by gravity
     """
 
-    mass = 75  # body mass (kg; excluding feet)
-    centre_of_mass_distance = 1  # distance from ankle to body segment centre of mass (m)
+    mass = SHANK_MASS
+    centre_of_mass_distance = COM_DIST
     g = 9.81  # acceleration of gravity
-    moment = mass * g * centre_of_mass_distance * np.cos(theta)
+    moment = mass * g * centre_of_mass_distance * np.cos((theta + thigh_offset) - np.pi/2)
 
     return moment

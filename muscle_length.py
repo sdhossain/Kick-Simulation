@@ -4,42 +4,31 @@ sys.path.append('./muscle_modelling')
 
 import numpy as np
 
-def soleus_length(theta):
+QUAD_SHANK_INSERTION = (0.2, 0.03)
+KNEE_ORIGIN = (0, 0.06)
+THIGH_LENGTH = 0.5
+PHI = (3*np.pi)/2
+
+def quad_muscle_length(theta, thigh_offset):
     """
-    Calculates soleus length based on angle
-    :param theta: body angle (up from prone horizontal)
-    :return soleus: length of muscle
+    Calculates quadricp muscle length based on angle
+    :param theta: angle between shank and thigh
+    :param thigh_offset: initial offset angle of thigh in radians
+    :return quad_muscle: length of muscle
     """
+
+    # obtain angle by which co-ordinate axis shifts
+    gamma = (theta + thigh_offset) - PHI
 
     # define rotation matrix
-    rotation = np.array([[np.cos(theta), -np.sin(theta)], 
-                         [np.sin(theta), np.cos(theta)]])
-    
-    # coordinates in global reference frame
-    origin = np.dot(rotation, np.array([0.3, 0.03]).T)
-    insertion = np.array([-0.05, -0.02])
-    
-    difference = origin - insertion
-    soleus_length = np.sqrt(difference[0]**2 + difference[1]**2)
-    
-    return soleus_length
-
-def tibialis_length(theta):
-    """
-    Calculates soleus length based on angle
-    :param theta: body angle (up from prone horizontal)
-    :return tibialis: length of muscle
-    """
-
-    # define rotation matrix
-    rotation = np.array([[np.cos(theta), -np.sin(theta)], 
-                          [np.sin(theta), np.cos(theta)]])
+    rotation = np.array([[np.cos(gamma), -np.sin(gamma)], 
+                          [np.sin(gamma), np.cos(gamma)]])
 
     # coordinates in global reference frame
-    origin = np.dot(rotation, np.array([0.3, -0.03]).reshape((2,1)))
-    insertion = np.array([0.06, -0.03]).reshape((2,1))
+    origin = np.dot(rotation, np.array([QUAD_SHANK_INSERTION[0], QUAD_SHANK_INSERTION[1]]).reshape((2,1)))
+    insertion = np.array([KNEE_ORIGIN[0], KNEE_ORIGIN[1]]).reshape((2,1))
 
     difference = origin - insertion
-    tibialis_anterior_length = np.sqrt(difference[0]**2 + difference[1]**2)
+    quad_muscle_length = np.sqrt(difference[0]**2 + difference[1]**2)
 
-    return tibialis_anterior_length[0]
+    return THIGH_LENGTH + quad_muscle_length[0]
