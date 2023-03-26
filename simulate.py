@@ -103,9 +103,7 @@ def simulate(T, initialCondition, thigh_offset, get_femoris_activation,
     axs[1].set_xlabel('Time (s)')
     axs[1].set_ylabel('Velocity (m/s)')
 
-    plt.show()
-
-    return {
+    return fig, {
         "max_velocity" : max(foot_velocity),
         "time" : time,
         "theta" : theta,

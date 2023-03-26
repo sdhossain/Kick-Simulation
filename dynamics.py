@@ -45,6 +45,7 @@ def dynamics(x, thigh_offset, femoris, lateralis, medialis,
     :return x_dot: time-derivate of state vector
     """
 
+    '''
     if x[0] > np.pi:
         print("too high - boundary reached")
         return x
@@ -52,6 +53,7 @@ def dynamics(x, thigh_offset, femoris, lateralis, medialis,
     if x[0] < 0:
         print("too low - boundary reached")
         return x
+    '''
 
     # we first obtain the normalized tendon lengths for both muscles
     # they depend on normalized muscle length and musculotendon length

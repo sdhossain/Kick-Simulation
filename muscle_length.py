@@ -31,4 +31,4 @@ def quad_muscle_length(theta, thigh_offset):
     difference = origin - insertion
     quad_muscle_length = np.sqrt(difference[0]**2 + difference[1]**2)
 
-    return quad_muscle_length[0]
+    return THIGH_LENGTH + quad_muscle_length[0]
