@@ -10,12 +10,12 @@ from muscle_length import quad_muscle_length
 from muscle_modelling.force_length import force_length_tendon
 from muscle_modelling.get_velocity import get_velocity
 
-KNEE_INERTIA = 90
+KNEE_INERTIA = 0.195
 QUAD_MOMENT_ARM = 0.05
-FEMORIS_MAX_FORCE = 10000
-LATERALIS_MAX_FORCE = 10000
-MEDIALIS_MAX_FORCE = 10000
-INTERMEDIUS_MAX_FORCE = 10000
+FEMORIS_MAX_FORCE = 3500
+LATERALIS_MAX_FORCE = 4000
+MEDIALIS_MAX_FORCE = 2500
+INTERMEDIUS_MAX_FORCE = 3000
 
 def dynamics(x, thigh_offset, femoris, lateralis, medialis, 
              intermedius, femoris_activation, lateralis_activation,
