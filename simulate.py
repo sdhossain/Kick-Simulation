@@ -10,7 +10,6 @@ from scipy.integrate import odeint
 from muscle_length import quad_muscle_length
 from muscle_modelling.hill_type_muscle import HillTypeMuscle
 from dynamics import dynamics
-from gravity_moment import gravity_moment
 
 QUAD_REST_ANGLE = math.pi
 FEMORIS_MAX_FORCE = 10000
@@ -27,18 +26,24 @@ INTERMEDIUS_TENDON_PERCENT = 0.3
 INTERMEDIUS_MUSCLE_PERCENT = 0.7
 SHANK_LENGTH = 1
 
-def simulate(T, initialCondition, get_femoris_activation, 
+def simulate(T, initialCondition, thigh_offset, get_femoris_activation, 
                 get_lateralis_activation, get_medialis_activation, get_intermedius_activation, 
                 force_length_regression, force_velocity_regression):
     """
     Runs a simulation of the model and plots results.
 
     :param T: total time to simulate, in seconds
+    :param initialCondition: initial state of thigh and muscles
+    :param thigh_offset: initial offset angle of thigh in radians
+    :param get_femoris_activation: femoris activation function w.r.t time
+    :param get_lateralis_activation: lateralis activation function w.r.t time
+    :param get_medialis_activation: medialis activation function w.r.t time
+    :param get_intermedius_activation: intermedius activation function w.r.t time
     :param force_length_regression: function that regresses force from length
     :param force_velocity_regression: function that regresses force from velocity
     """
 
-    rest_quad_muscle_length = quad_muscle_length(QUAD_REST_ANGLE)
+    rest_quad_muscle_length = quad_muscle_length(QUAD_REST_ANGLE, thigh_offset)
     rest_length_femoris = rest_quad_muscle_length
     rest_length_lateralis = rest_quad_muscle_length
     rest_length_medialis = rest_quad_muscle_length
@@ -62,14 +67,17 @@ def simulate(T, initialCondition, get_femoris_activation,
                 INTERMEDIUS_TENDON_PERCENT*rest_length_intermedius)
 
     def f(x, t):
+        """
+        Analytical Equation to Use in Solver
+        """
 
         femoris_activation = get_femoris_activation(t)
         lateralis_activation = get_lateralis_activation(t)
         medialis_activation = get_medialis_activation(t)
         intermedius_activation = get_intermedius_activation(t)
 
-        return dynamics(x, femoris, lateralis, medialis, intermedius,
-             femoris_activation, lateralis_activation,
+        return dynamics(x, thigh_offset, femoris, lateralis, medialis, 
+             intermedius, femoris_activation, lateralis_activation,
              medialis_activation, intermedius_activation,
              force_length_regression, force_velocity_regression,
              )
@@ -97,4 +105,9 @@ def simulate(T, initialCondition, get_femoris_activation,
 
     plt.show()
 
-    return max(foot_velocity)
+    return {
+        "max_velocity" : max(foot_velocity),
+        "time" : time,
+        "theta" : theta,
+        "velocity": foot_velocity
+    }
