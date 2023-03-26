@@ -83,7 +83,7 @@ def simulate(T, initialCondition, thigh_offset, get_femoris_activation,
              )
 
     tspan = [0, T]
-    time = np.linspace(tspan[0], tspan[-1], 10000)
+    time = np.linspace(tspan[0], tspan[-1], 100)
     y = odeint(f, initialCondition, time, full_output=False)
 
     theta = y[:,0]
@@ -103,8 +103,14 @@ def simulate(T, initialCondition, thigh_offset, get_femoris_activation,
     axs[1].set_xlabel('Time (s)')
     axs[1].set_ylabel('Velocity (m/s)')
 
+    def is_valid_angle(angle):
+        return 0 <= angle <= np.pi
+
+    valid_angles = np.vectorize(is_valid_angle)(theta)
+    valid_velocities = foot_velocity[valid_angles]
+
     return fig, {
-        "max_velocity" : max(foot_velocity),
+        "max_velocity" : max(valid_velocities),
         "time" : time,
         "theta" : theta,
         "velocity": foot_velocity
