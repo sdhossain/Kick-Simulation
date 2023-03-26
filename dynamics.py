@@ -11,7 +11,7 @@ from muscle_modelling.force_length import force_length_tendon
 from muscle_modelling.get_velocity import get_velocity
 
 KNEE_INERTIA = 0.195
-QUAD_MOMENT_ARM = 0.05
+QUAD_MOMENT_ARM = 0.039
 FEMORIS_MAX_FORCE = 3500
 LATERALIS_MAX_FORCE = 4000
 MEDIALIS_MAX_FORCE = 2500
