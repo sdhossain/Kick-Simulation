@@ -4,8 +4,8 @@ sys.path.append('./muscle_modelling')
 
 import numpy as np
 
-SHANK_MASS = 18
-COM_DIST = 0.6
+SHANK_MASS = 4.33
+COM_DIST = 0.22
 PHI = (3*np.pi)/2
 
 def gravity_moment(theta, thigh_offset):
