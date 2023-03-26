@@ -4,8 +4,8 @@ sys.path.append('./muscle_modelling')
 
 import numpy as np
 
-QUAD_SHANK_INSERTION = (0.1, 0.01)
-KNEE_ORIGIN = (0, 0)
+QUAD_SHANK_INSERTION = (0.2, 0.03)
+KNEE_ORIGIN = (0, 0.06)
 THIGH_LENGTH = 0.5
 PHI = (3*np.pi)/2
 
