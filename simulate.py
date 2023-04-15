@@ -93,25 +93,33 @@ def simulate(T, initialCondition, thigh_offset, get_femoris_activation,
     for i in range(y.shape[0]):
         foot_velocity[i] = SHANK_LENGTH*angular_velocity[i]
 
+
+    def is_valid_angle(angle):
+        return 0 <= angle <= np.pi
+
+    def is_invalid_angle(angle):
+        return not is_valid_angle(angle)
+
+    idxs = np.array(range(len(time)))
+    invalid_idxs = idxs[np.vectorize(is_invalid_angle)(theta)]
+
+    time = time[:min(invalid_idxs)]
+    theta = theta[:min(invalid_idxs)]
+    foot_velocity = foot_velocity[:min(invalid_idxs)]
+
     fig, axs = plt.subplots(2, 1, figsize=(8, 10))
 
-    axs[0].plot(time, theta, linewidth=1.5)
-    axs[0].set_ylabel('Body Angle (rad)')
+    axs[0].plot(time, theta*(180/np.pi), linewidth=1.5)
+    axs[0].set_ylabel('Thigh-Shank Angle (degree)')
 
     axs[1].plot(time, foot_velocity, linewidth=1.5)
     axs[1].legend(loc='upper left')
     axs[1].set_xlabel('Time (s)')
     axs[1].set_ylabel('Velocity (m/s)')
 
-    def is_valid_angle(angle):
-        return 0 <= angle <= np.pi
-
-    valid_angles = np.vectorize(is_valid_angle)(theta)
-    valid_velocities = foot_velocity[valid_angles]
-
     return fig, {
-        "max_velocity" : max(valid_velocities),
+        "max_velocity" : max(foot_velocity),
         "time" : time,
         "theta" : theta,
-        "velocity": foot_velocity
+        "velocity": foot_velocity,
     }
